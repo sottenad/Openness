@@ -9,6 +9,7 @@ var _article;
 var _currXML;
 var _showPanelAnimation = true;
 var _panelsCurrentlyAnimating = false;
+var _currentVideoId = '';
 
 var homeurl = "http://www.microsoft.com/en-us/openness/#home";
 
@@ -110,16 +111,18 @@ function buildPage(){
 					var markup = '<div id="breadcrumb"></div>';
 					markup += '<div data-videoid="'+videoid+'" id="vidHolder" class="videoholder"><span class="playicon"></span> <img src="video/'+smallposter+'" /> <small>'+title+'</small> </div>';
 				}else{
+					
 					var markup = '<div data-videoid="'+videoid+'" id="vidHolder" class="homevideoholder"><span class="playicon"></span><img src="video/'+poster+'" /> <small>'+title+'</small> </div>';
 					showHome = true;
 				}
 				$('#banner figure').html(markup);
 				
+				buildVideoDrawer(_source, videoid);
 				
 				$('#vidHolder').live('click', function(){
-					_section = 'videos';
-					_article = $(this).attr('data-videoid');
-					updateHash();
+					//_section = 'videos';
+					//_article = $(this).attr('data-videoid');
+					//updateHash();
 					//window.location.hash = _page+'/'+_section+'/'+_article;
 				});
 				
@@ -161,9 +164,9 @@ function buildPage(){
 			if(  typeof(_section) != 'undefined'){
 				if(_section == 'videos'){
 					if(typeof(_article) !='undefined'){
-						buildVideoDrawer(_page, _article);
+						buildVideoDrawer(_page, _article, true);
 					}else{			
-						buildVideoDrawer(_page);
+						buildVideoDrawer(_page, null, true);
 					}
 				}else{
 					var file = $(xml).find('[id="'+_section+'"]').find('source').text();
@@ -206,7 +209,7 @@ function createDrawerSlider(){
 
 		
 /*Builds out a video gallery drawer, much different from the normal ajax call for a static drawer*/
-function buildVideoDrawer(xmlfile, selected){
+function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 		xml = $(_source).find('#'+_page);
 			var numOfVids = $(xml).find('video').length;
 			/*Check for multiple videos, there are differences in display*/
@@ -218,7 +221,9 @@ function buildVideoDrawer(xmlfile, selected){
 					var title = $(this).find('title').text();
 					var thumb = $(this).find('thumb').text();
 					var desc = $(this).find('description').text();
-					var vidurl = $(this).find('videofile').text(); 
+					var mp4url = $(this).find('mp4video').text(); 
+					var webmurl = $(this).find('webmvideo').text();
+					var ogvurl = $(this).find('ogvvideo').text();
 					var vidposter = $(this).find('poster').text();
 					var vidsmallposter = $(this).find('smallposter').text();
 					var vidlabel = $(this).find('label').text();
@@ -248,14 +253,29 @@ function buildVideoDrawer(xmlfile, selected){
 						vheight = $(this).find('videoheight').text();
 					}
 					if(id == selected){
-						videoMarkup = makeVideoMarkup(vheight, vwidth, vidurl, vidposter);
-						
+						console.log([id, selected])
+						if(_currentVideoId != ''){
+
+							var myPlayer = _V_(_currentVideoId);
+							myPlayer.destroy();
+							console.log('destroyed: '+_currentVideoId );
+						}
+					
+						videoMarkup = makeVideoMarkup(id, vheight, vwidth, mp4url, webmurl, ogvurl, vidposter);
+						console.log('right after markup is added');
+						$('#vidHolder').empty();
 						$('#vidHolder').html(videoMarkup);
-						if(_page != "home" && vidaspect === "4:3") $(".videoholder #silverlightControlHost").css("margin-left", 72); //reposition player for 4:3 aspect ratio
+						if(_page != "home" && vidaspect === "4:3") $(".videoholder #videoplayer").css("margin-left", 72); //reposition player for 4:3 aspect ratio
 						var metadata = '<h4>'+title+'</h4><p>'+desc+'</p>';
 						metadata += '<div class="socialbuttons"><div id="tweetBtn"><a target="_blank" href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="openatmicrosoft">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div><div id="facebookBtn"><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="'+window.location.href+'" layout="button_count" show_faces="false" width="55" font="segoe ui"></fb:like></div></div>';
 						
 						videoMarkup += metadata;
+						
+						_V_(id,{ "controls": true, "autoplay": false, "preload": "auto" }, function(){
+					      // Player (this) is initialized and ready.
+					      console.log('Finished Loading Video.js on: '+id.toString());
+					      _currentVideoId = id.toString();
+					    });
 					}
 				});	
 				
@@ -266,7 +286,9 @@ function buildVideoDrawer(xmlfile, selected){
 					$('#drawer').slideUp(500, function(){
 						var wrapper = '<div id="slides" class="clearfix"><ul>'+markup+'</ul><div class="clearfix"></div></div>';
 						$('#drawer').html(wrapper);	
-						openDrawer();
+						if(openDrawerbool){
+							openDrawer();
+						}
 					});
 				}
 			$('.playiconsmall').css('opacity',0.4);
@@ -276,10 +298,10 @@ function buildVideoDrawer(xmlfile, selected){
 			$('.videothumb').live('mouseout', function(){
 				$(this).find('.playiconsmall').stop().fadeTo(100,.4);
 			});
-				
-			openDrawer();
-			assignVideoSwitcher();
-			
+			if(openDrawerbool){
+				openDrawer();
+				assignVideoSwitcher();
+			}
 			
 			if($(xml).find('video').length > 4){
 				createDrawerSlider();
