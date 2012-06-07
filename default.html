@@ -14,7 +14,9 @@
 	<meta name="author" content="">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" href="css/openness.main.css">
+    <link rel="stylesheet" href="css/openness.main.css">
 	<script src="js/modernizr.custom.js"></script>
+    <script src="js/video.js"></script>
 	<!--[if lt IE 9]><script src="js/html5.js"></script><![endif]-->
 	<!--[if lt IE 9]><link rel="stylesheet" href="css/notlight.css"><![endif]-->
 	<!--[if lte IE 7]><!--><link rel="stylesheet" href="css/ie7.css"><!--<![endif]-->
@@ -77,7 +79,11 @@
 	
 	<div class="shadow_top"></div>
 	<section id="banner" class="homeBanner">
-		<figure></figure>
+		<video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="439" height="248"
+      poster="http://danottenad.com/openness/images/video_thumbs/main_vid_1.jpg"
+      data-setup="{}">
+    <source src="http://danottenad.com/openness/Standards_LowRes.mp4" type='video/mp4' />
+  </video>
 	</section>
 	<!--End Banner-->
 	
@@ -210,7 +216,7 @@
 	</noscript>
 	<!-- END OF SmartSource Data Collector TAG -->
 	
-	<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
 	<script type="text/javascript" src="js/includes.js"></script>
 	<script type="text/javascript" src="js/bigCarousel.js"></script>
 	<script type="text/javascript" src="js/jquery.opennessbanner.js" ></script>

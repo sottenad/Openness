@@ -89,87 +89,87 @@ function assignPanelNavHandler(){
 function buildPage(){
 	var showHome = false;
 
-	if(_showPanelAnimation){
-		xml = $(_source).find('#'+_page);
-		if (debug) console.log(_page);
-		/*Build Video Panel - Selext a random video from the list.*/
-		var numOfVids = $(xml).find('video').length;
-		if(numOfVids > 1 && _page != "home"){
-			var selectedVideoNum = Math.floor(Math.random()*numOfVids);
-		}else{
-			var selectedVideoNum = 0;
-		}
-		var sv = $(xml).find('video').eq(selectedVideoNum);
-		var videoid = $(sv).attr('id');
-		var thumb = $(sv).find('thumb').text();
-		var poster = $(sv).find('poster').text();
-		var smallposter = $(sv).find('smallposter').text();
-		var title = $(sv).find('title').text();
-		var description = $(sv).find('description').text();
-		if(_page != 'home'){
-			var markup = '<div id="breadcrumb"></div>';
-			markup += '<div data-videoid="'+videoid+'" id="vidHolder" class="videoholder"><span class="playicon"></span> <img src="video/'+smallposter+'" /> <small>'+title+'</small> </div>';
-		}else{
-			var markup = '<div data-videoid="'+videoid+'" id="vidHolder" class="homevideoholder"><span class="playicon"></span><img src="video/'+poster+'" /> <small>'+title+'</small> </div>';
-			showHome = true;
-		}
-		$('#banner figure').html(markup);
-		
-		
-		$('#vidHolder').live('click', function(){
-			_section = 'videos';
-			_article = $(this).attr('data-videoid');
-			updateHash();
-			//window.location.hash = _page+'/'+_section+'/'+_article;
-		});
-		
-		
-		/*Build Panels*/
-		$(xml).find('tile').each(function(index){
-			var id = $(this).attr('id');
-			var location = $(this).find('location').text();
-			var source = $(this).find('source').text();
-			var content = $(this).find('content').text();
-			var color = $(this).find('color').text();					
-			var markup = '<aside class="'+color+'" data-source="'+source+'" data-location="'+location+'" data-hash="'+id+'" id="banner'+Number(index+1)+'">'+content+'</aside>';
-			$(markup).css({'display':'none'});
-			$('#banner').append(markup);
-		});
-		
-		
-		/*Fill Factoids - Anywhere you use <tile id="factoid"> in the markup, it will generate a factoid there*/
-		var factoidNodes = [];
-		factoidNodes = $(xml).find('#factoid');
-		var selectedFactoid = Math.floor(Math.random()*factoidNodes.length);
-		var factoid = factoidNodes[selectedFactoid];
-		
-		if ( $(factoid).find('poster').text() != '' ) {
-			var fImg = $(factoid).find('poster').text();
-			var fmarkup = '<div class="factoid"><img src="images/factoids/'+fImg+'" alt=""></div>';
-		} else {
-			var fhighlight =  $(factoid).find('highlight').text();
-			var fmessage = $(factoid).find('message').text();
-			var fmarkup = '<div class="factoid"><strong>'+fhighlight+'</strong><small>'+fmessage+'</small></div>';
-		}
-		
-		$('[data-hash="factoid"]').append(fmarkup);
-		
-		showPanels(showHome);
-	}
-	
-	/*Last Step: check for a section variable, if so, pop that open*/	
-	if(  typeof(_section) != 'undefined'){
-		if(_section == 'videos'){
-			if(typeof(_article) !='undefined'){
-				buildVideoDrawer(_page, _article);
-			}else{			
-				buildVideoDrawer(_page);
+			if(_showPanelAnimation){
+				xml = $(_source).find('#'+_page);
+				if (debug) console.log(_page);
+				/*Build Video Panel - Selext a random video from the list.*/
+				var numOfVids = $(xml).find('video').length;
+				if(numOfVids > 1 && _page != "home"){
+					var selectedVideoNum = Math.floor(Math.random()*numOfVids);
+				}else{
+					var selectedVideoNum = 0;
+				}
+				var sv = $(xml).find('video').eq(selectedVideoNum);
+				var videoid = $(sv).attr('id');
+				var thumb = $(sv).find('thumb').text();
+				var poster = $(sv).find('poster').text();
+				var smallposter = $(sv).find('smallposter').text();
+				var title = $(sv).find('title').text();
+				var description = $(sv).find('description').text();
+				if(_page != 'home'){
+					var markup = '<div id="breadcrumb"></div>';
+					markup += '<div data-videoid="'+videoid+'" id="vidHolder" class="videoholder"><span class="playicon"></span> <img src="video/'+smallposter+'" /> <small>'+title+'</small> </div>';
+				}else{
+					var markup = '<div data-videoid="'+videoid+'" id="vidHolder" class="homevideoholder"><span class="playicon"></span><img src="video/'+poster+'" /> <small>'+title+'</small> </div>';
+					showHome = true;
+				}
+				$('#banner figure').html(markup);
+				
+				
+				$('#vidHolder').live('click', function(){
+					_section = 'videos';
+					_article = $(this).attr('data-videoid');
+					updateHash();
+					//window.location.hash = _page+'/'+_section+'/'+_article;
+				});
+				
+				
+				/*Build Panels*/
+				$(xml).find('tile').each(function(index){
+					var id = $(this).attr('id');
+					var location = $(this).find('location').text();
+					var source = $(this).find('source').text();
+					var content = $(this).find('content').text();
+					var color = $(this).find('color').text();					
+					var markup = '<aside class="'+color+'" data-source="'+source+'" data-location="'+location+'" data-hash="'+id+'" id="banner'+Number(index+1)+'">'+content+'</aside>';
+					$(markup).css({'display':'none'});
+					$('#banner').append(markup);
+				});
+				
+				
+				/*Fill Factoids - Anywhere you use <tile id="factoid"> in the markup, it will generate a factoid there*/
+				var factoidNodes = [];
+				factoidNodes = $(xml).find('#factoid');
+				var selectedFactoid = Math.floor(Math.random()*factoidNodes.length);
+				var factoid = factoidNodes[selectedFactoid];
+				
+				if ( $(factoid).find('poster').text() != '' ) {
+					var fImg = $(factoid).find('poster').text();
+					var fmarkup = '<div class="factoid"><img src="images/factoids/'+fImg+'" alt=""></div>';
+				} else {
+					var fhighlight =  $(factoid).find('highlight').text();
+					var fmessage = $(factoid).find('message').text();
+					var fmarkup = '<div class="factoid"><strong>'+fhighlight+'</strong><small>'+fmessage+'</small></div>';
+				}
+				
+				$('[data-hash="factoid"]').append(fmarkup);
+				
+				showPanels(showHome);
 			}
-		}else{
-			var file = $(xml).find('[id="'+_section+'"]').find('source').text();
-			buildSection(file);
-		}
-	}
+			
+			/*Last Step: check for a section variable, if so, pop that open*/	
+			if(  typeof(_section) != 'undefined'){
+				if(_section == 'videos'){
+					if(typeof(_article) !='undefined'){
+						buildVideoDrawer(_page, _article);
+					}else{			
+						buildVideoDrawer(_page);
+					}
+				}else{
+					var file = $(xml).find('[id="'+_section+'"]').find('source').text();
+					buildSection(file);
+				}
+			}
 }
 
 /*A simple ajax call to retrieve content from an html file, the show the drawer*/
@@ -303,7 +303,7 @@ function assignAsideHandlers(){
 			_section = undefined;
 			_article = undefined;
 		}
-		updateHash();
+		updateHash();	
 	});
 	
 	/*Creates listener on the logo to send you home*/
@@ -420,7 +420,7 @@ function initAddress(){
 	if(debug) console.log(window.location.hash);
     if (window.location.hash && window.location.hash != "#"){
 		hash = window.location.hash;
-	} else {
+	}else{
 		hash = 'home';
 	}
     
@@ -436,29 +436,17 @@ function initAddress(){
     window.location.hash = hash;	
 	
 	/* Web Trends */
-	if (hash != 'home') {
-		var wtTitle = 'Microsoft Openness - ' + cleanHash.replace(/\//g, ' ').replace(/^\w/, function($0) { return $0.toUpperCase(); })
-		var hn = window.location.hostname;
-		var pn = window.location.pathname;
-		var homepage = 'default.aspx';
-		if (pn.indexOf(homepage) < 0) {
-			pn = pn + homepage;
-		}
-		if (hn.indexOf('.com') >= 0) {  // Don't track staging
-			dcsMultiTrack('DCS.dcssip', hn, 'DCS.dcsuri', pn + hash, 'WT.ti', wtTitle);
-		}
-		if(debug) console.log('DCS.dcssip:' + hn + ', DCS.dcsuri:' + pn + hash + ', WT.ti:'+ wtTitle);
-	}
-	/* End Web Trends */
+	var wtTitle = 'Microsoft Openness - ' + cleanHash.replace(/\//g, ' ').replace(/^\w/, function($0) { return $0.toUpperCase(); })
+	dcsMultiTrack('DCS.dcssip', window.location.hostname, 'DCS.dcsuri', window.location.pathname + hash, 'WT.ti', wtTitle);
 	
 	if(debug) console.log(hash);
-		
+	
 	/*Parse hash*/
 	var hashArr = cleanHash.split('/');
 	_page = hashArr[0];
 	_section = hashArr[1];
 	_article = hashArr[2];
-		
+
 	setTimeout(function() { 
 		buildPage();
 		$('#breadcrumb').html('<a id="homelink">back</a>' + '<span class="currPage">' + $(_source).find('#'+_page).find('name').eq(0).text() + '</span>');
