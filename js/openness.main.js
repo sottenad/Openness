@@ -92,7 +92,7 @@ function buildPage(override){
 
 			if(_showPanelAnimation || override){
 				xml = $(_source).find('#'+_page);
-				if (debug) console.log('BUILDPAGE() -- '+_page);
+				//if (debug) console.log('BUILDPAGE() -- '+_page);
 				/*Build Video Panel - Selext a random video from the list.*/
 				var numOfVids = $(xml).find('video').length;
 				if(numOfVids > 1 && _page != "home"){
@@ -191,7 +191,7 @@ function buildSection(file){
 					createDrawerSlider();
 				}
 			},error: function(jqXHR, textStatus, errorThrown){
-				if(debug) console.log('BuildDrawer() error: '+errorThrown);
+				//if(debug) console.log('BuildDrawer() error: '+errorThrown);
 				window.location = homeurl;
 			}
 		});
@@ -274,11 +274,11 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						
 						videoMarkup += metadata;
 						function hidemscaption(){
-								console.log(id);
+								//console.log(id);
 								$('#'+id).parent().find('.mscaption').hide();
 						}
 						function showmscaption(){
-								console.log(id);
+								//console.log(id);
 								$('#'+id).parent().find('.mscaption').show();
 						}
 
