@@ -233,7 +233,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						var vwidth = 444;
 						var vheight = 270;
 					}else if(vidaspect === "4:3") {
-						var vwidth = 444;
+						var vwidth = 300;
 						var vheight = 225;
 						vidposter = vidsmallposter;
 					}else{
@@ -255,8 +255,11 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 					if(id == selected){
 						//console.log([id, selected])
 						if(_currentVideoId != ''){
+
 							var myPlayer = _V_(_currentVideoId);
-							myPlayer.destroy();
+							if( myPlayer != undefined){
+								myPlayer.destroy();
+							}
 							//console.log('destroyed: '+_currentVideoId );
 						}
 					
@@ -329,12 +332,13 @@ function assignAsideHandlers(){
 	
 	/*Creates listener on the logo to send you home*/
 	$('header h1 a, #homelink').live('click', function(){
-		goHome();
+		goHome(false);
 	});
 }
 
-function goHome(){
-	if(_page != 'home' && !_panelsCurrentlyAnimating){
+function goHome(override){
+	
+		if(_page != 'home' && !_panelsCurrentlyAnimating){
 			$('[data-hash="home"]').attr('id','bannerOut');
 			var panelid = 'home';
 			var loc = $(this).attr('data-location');
@@ -343,8 +347,9 @@ function goHome(){
 			_article = undefined;
 			hidePanels(panelid);
 			updateHash();	
-	}
+		}
 }
+
 
 /*Creates the listeners and logic to run the drawer-based video gallery*/
 function assignVideoSwitcher(){
@@ -464,7 +469,7 @@ function initAddress(){
 	var wtTitle = 'Microsoft Openness - ' + cleanHash.replace(/\//g, ' ').replace(/^\w/, function($0) { return $0.toUpperCase(); })
 	dcsMultiTrack('DCS.dcssip', window.location.hostname, 'DCS.dcsuri', window.location.pathname + hash, 'WT.ti', wtTitle);
 	
-	if(debug) console.log(hash);
+	//if(debug) console.log(hash);
 	
 	var oldpage = _page;
 	
@@ -473,12 +478,17 @@ function initAddress(){
 	_page = hashArr[0];
 	_section = hashArr[1];
 	_article = hashArr[2];
+	
+	console.log([_page, oldpage]);
+	if(_page == 'home' && oldpage != 'home' && oldpage != undefined){
+		$('[data-hash="home"]').attr('id','bannerOut');
+		hidePanels('home');
+	}
 
 	setTimeout(function() { 
-		if(_page == 'home'){
-			goHome();
-		}
-		buildPage();
+		//Add a `true` parameter to the buildPage() call to override
+		console.log('build:: '+_page);
+		buildPage(true);
 		$('#breadcrumb').html('<a id="homelink">back</a>' + '<span class="currPage">' + $(_source).find('#'+_page).find('name').eq(0).text() + '</span>');
 	}, 700);
        
