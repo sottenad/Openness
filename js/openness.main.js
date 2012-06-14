@@ -87,10 +87,10 @@ function assignPanelNavHandler(){
 }
 
 /*Takes a xml file and the name you want in the hash, and builds out the panels for that location*/
-function buildPage(){
+function buildPage(override){
 	var showHome = false;
 
-			if(_showPanelAnimation){
+			if(_showPanelAnimation || override){
 				xml = $(_source).find('#'+_page);
 				if (debug) console.log('BUILDPAGE() -- '+_page);
 				/*Build Video Panel - Selext a random video from the list.*/
@@ -330,7 +330,12 @@ function assignAsideHandlers(){
 	
 	/*Creates listener on the logo to send you home*/
 	$('header h1 a, #homelink').live('click', function(){
-		if(_page != 'home' && !_panelsCurrentlyAnimating){
+		goHome();
+	});
+}
+
+function goHome(){
+	if(_page != 'home' && !_panelsCurrentlyAnimating){
 			$('[data-hash="home"]').attr('id','bannerOut');
 			var panelid = 'home';
 			var loc = $(this).attr('data-location');
@@ -339,8 +344,7 @@ function assignAsideHandlers(){
 			_article = undefined;
 			hidePanels(panelid);
 			updateHash();	
-		}
-	});
+	}
 }
 
 /*Creates the listeners and logic to run the drawer-based video gallery*/
@@ -463,6 +467,8 @@ function initAddress(){
 	
 	if(debug) console.log(hash);
 	
+	var oldpage = _page;
+	
 	/*Parse hash*/
 	var hashArr = cleanHash.split('/');
 	_page = hashArr[0];
@@ -470,6 +476,9 @@ function initAddress(){
 	_article = hashArr[2];
 
 	setTimeout(function() { 
+		if(_page == 'home'){
+			goHome();
+		}
 		buildPage();
 		$('#breadcrumb').html('<a id="homelink">back</a>' + '<span class="currPage">' + $(_source).find('#'+_page).find('name').eq(0).text() + '</span>');
 	}, 700);
