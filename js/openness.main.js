@@ -1,6 +1,6 @@
 /*global vars*/
 var isDrawerOpen = false;
-var debug = false;
+var debug = true;
 var _source;
 var _oldPage = '';
 var _page;
@@ -92,7 +92,7 @@ function buildPage(){
 
 			if(_showPanelAnimation){
 				xml = $(_source).find('#'+_page);
-				if (debug) console.log(_page);
+				if (debug) console.log('BUILDPAGE() -- '+_page);
 				/*Build Video Panel - Selext a random video from the list.*/
 				var numOfVids = $(xml).find('video').length;
 				if(numOfVids > 1 && _page != "home"){
@@ -253,16 +253,16 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						vheight = $(this).find('videoheight').text();
 					}
 					if(id == selected){
-						console.log([id, selected])
+						//console.log([id, selected])
 						if(_currentVideoId != ''){
 
 							var myPlayer = _V_(_currentVideoId);
 							myPlayer.destroy();
-							console.log('destroyed: '+_currentVideoId );
+							//console.log('destroyed: '+_currentVideoId );
 						}
 					
 						videoMarkup = makeVideoMarkup(id, vheight, vwidth, mp4url, webmurl, ogvurl, vidposter);
-						console.log('right after markup is added');
+						//console.log('right after markup is added');
 						$('#vidHolder').empty();
 						$('#vidHolder').html(videoMarkup);
 						if(_page != "home" && vidaspect === "4:3") $(".videoholder #videoplayer").css("margin-left", 72); //reposition player for 4:3 aspect ratio
@@ -273,7 +273,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						
 						_V_(id,{ "controls": true, "autoplay": false, "preload": "auto" }, function(){
 					      // Player (this) is initialized and ready.
-					      console.log('Finished Loading Video.js on: '+id.toString());
+					      //console.log('Finished Loading Video.js on: '+id.toString());
 					      _currentVideoId = id.toString();
 					    });
 					}
@@ -355,7 +355,7 @@ function assignVideoSwitcher(){
   its uniformly shaped panels, as opposed to an inner page with a home button*/
 function showPanels(home){
 	var speed = 150;
-	if(debug) console.log('showpanelanimation: '+_showPanelAnimation);
+	//if(debug) console.log('showpanelanimation: '+_showPanelAnimation);
 	if(home){
 		//Show the Home Panels, a bit different measurements than others.
 		$('#banner #banner4').addClass('homeButton');
@@ -439,7 +439,7 @@ function updateHash(){
 function initAddress(){  
   $(window).bind('hashchange', function () {
 
-	if(debug) console.log(window.location.hash);
+	//if(debug) console.log(window.location.hash);
     if (window.location.hash && window.location.hash != "#"){
 		hash = window.location.hash;
 	}else{
@@ -483,7 +483,7 @@ function initAddress(){
 /*The function that will animate the metro panels out. Make sure to call showPanels() after this is done*/
 function hidePanels(selected){
 	_panelsCurrentlyAnimating = true;
-	if(debug) console.log(selected);
+	//if(debug) console.log(selected);
 	closeDrawer();
 	var count = 0;
 	$('#banner aside').each(function(){
@@ -492,7 +492,7 @@ function hidePanels(selected){
 			count++;
 		}else{
 			/*Be sure to account for padding on the aside elements*/
-			if(debug) console.log('matched');
+			//if(debug) console.log('matched');
 			$(this).delay(350).animate({
 				'top':'12px',
 				'left':'0px',
