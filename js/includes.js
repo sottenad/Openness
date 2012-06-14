@@ -330,9 +330,16 @@ function makeVideoMarkup(id, height, width, mp4url, webmurl, ogvurl, poster){
 	var output = '';
 	output += '<video id="'+id+'" class="video-js vjs-default-skin" controls ';
 	output += 'preload="auto" width="'+width+'" height="'+height+'" poster="video/'+poster+'">';
-	output += '<source src="'+mp4url+'" type="video/mp4">';
-	output += '<source src="'+webmurl+'" type="video/webm">';
-	output += '<source src="'+ogvurl+'" type="video/ogv">';
+	if(mp4url!=''){
+		output += '<source src="'+mp4url+'" type="video/mp4">';
+	}
+	if(ogvurl!=''){
+		output += '<source src="'+ogvurl+'" type="video/ogv">';
+	}
+	if(webmurl!=''){
+		output += '<source src="'+webmurl+'" type="video/webm">';
+	}
+	output += '<source src="'+ogvurl+'" type="video/ogg">';
 	output += '</video>';
 	return output;
 }
