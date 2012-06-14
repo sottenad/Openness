@@ -81,7 +81,7 @@ nav ul ul li a{text-decoration:none; font-size:13px;}
 /*Banner Video Player*/
 .videoholder {background-color:#000;}
 .videoholder #silverlightControlHost {margin:0 0 0 22px;}
-.videoholder small, .homevideoholder small{position:absolute; bottom:0; right:0; padding:5px; background:url(../images/black_80.png); line-height:14px;}
+.videoholder small, .homevideoholder small, .mscaption{position:absolute; bottom:0; right:0; font-size:15px; padding:5px; background:url(../images/black_80.png); line-height:14px;}
 .videoholder img{position:absolute; /*top:45px;*/ left:0; width:444px; height:225px;}
 
 .homevideoholder img{position:absolute; top:0px; left:0; width:444px; height:270px;}

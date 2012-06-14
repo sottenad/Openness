@@ -331,7 +331,7 @@ function makeVideoMarkup(height, width, source, poster){
 }
 */
 
-function makeVideoMarkup(id, height, width, mp4url, webmurl, ogvurl, poster){
+function makeVideoMarkup(id, height, width, mp4url, webmurl, ogvurl, poster, vidlabel){
 
 	var output = '';
 	output += '<video id="'+id+'" class="video-js vjs-default-skin" controls ';
@@ -347,6 +347,7 @@ function makeVideoMarkup(id, height, width, mp4url, webmurl, ogvurl, poster){
 	}
 	output += '<source src="'+ogvurl+'" type="video/ogg">';
 	output += '</video>';
+	output += '<span class="mscaption">'+vidlabel+'</span>';
 	return output;
 }
 

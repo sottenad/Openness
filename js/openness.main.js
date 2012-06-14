@@ -233,7 +233,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						var vwidth = 444;
 						var vheight = 270;
 					}else if(vidaspect === "4:3") {
-						var vwidth = 300;
+						var vwidth = 444;
 						var vheight = 225;
 						vidposter = vidsmallposter;
 					}else{
@@ -263,7 +263,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 							//console.log('destroyed: '+_currentVideoId );
 						}
 					
-						videoMarkup = makeVideoMarkup(id, vheight, vwidth, mp4url, webmurl, ogvurl, vidposter);
+						videoMarkup = makeVideoMarkup(id, vheight, vwidth, mp4url, webmurl, ogvurl, vidposter, vidlabel);
 						//console.log('right after markup is added');
 						$('#vidHolder').empty();
 						$('#vidHolder').html(videoMarkup);
