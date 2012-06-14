@@ -527,5 +527,5 @@ function hidePanels(selected){
 			});
 		}	
 	});
-	$('#banner figure').delay(200).fadeOut(200);
+	$('#banner figure').delay(200).fadeOut(150);
 }
