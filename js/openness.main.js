@@ -233,7 +233,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						var vwidth = 444;
 						var vheight = 270;
 					}else if(vidaspect === "4:3") {
-						var vwidth = 300;
+						var vwidth = 444;
 						var vheight = 225;
 						vidposter = vidsmallposter;
 					}else{
@@ -255,7 +255,6 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 					if(id == selected){
 						//console.log([id, selected])
 						if(_currentVideoId != ''){
-
 							var myPlayer = _V_(_currentVideoId);
 							myPlayer.destroy();
 							//console.log('destroyed: '+_currentVideoId );
