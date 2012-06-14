@@ -14,11 +14,12 @@
 	<meta name="author" content="">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="stylesheet" href="css/openness.main.css">
+    <link rel="stylesheet" href="css/video-js.css">
 	<script src="js/modernizr.custom.js"></script>
+    <script src="js/video.js"></script>
 	<!--[if lt IE 9]><script src="js/html5.js"></script><![endif]-->
 	<!--[if lt IE 9]><link rel="stylesheet" href="css/notlight.css"><![endif]-->
 	<!--[if lte IE 7]><!--><link rel="stylesheet" href="css/ie7.css"><!--<![endif]-->
-	
 </head>
 <body>
 	
@@ -77,7 +78,9 @@
 	
 	<div class="shadow_top"></div>
 	<section id="banner" class="homeBanner">
-		<figure></figure>
+		<figure>
+			
+		</figure>
 	</section>
 	<!--End Banner-->
 	
@@ -215,6 +218,13 @@
 	<script type="text/javascript" src="js/bigCarousel.js"></script>
 	<script type="text/javascript" src="js/jquery.opennessbanner.js" ></script>
 	<script type="text/javascript" src="js/openness.main.js"></script>
+    <script type="text/javascript" src="js/jquery.address-1.4.js"></script>
+    <script type="text/javascript">
+      _V_.options.flash.swf = "http://danottenad.com/openness/video/video-js.swf"
+	  //_V_.options.techOrder = ["flash"];
+    </script>
+    
+    
 	
 </body>
 
