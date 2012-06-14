@@ -237,7 +237,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						var vheight = 225;
 						vidposter = vidsmallposter;
 					}else{
-						var vwidth = 400;
+						var vwidth = 444;
 						var vheight = 225;
 						vidposter = vidsmallposter;
 					}
