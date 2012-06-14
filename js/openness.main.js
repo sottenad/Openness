@@ -261,6 +261,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 								myPlayer.destroy();
 							}
 							//console.log('destroyed: '+_currentVideoId );
+							
 						}
 					
 						videoMarkup = makeVideoMarkup(id, vheight, vwidth, mp4url, webmurl, ogvurl, vidposter, vidlabel);
@@ -272,12 +273,23 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						metadata += '<div class="socialbuttons"><div id="tweetBtn"><a target="_blank" href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="openatmicrosoft">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div><div id="facebookBtn"><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="'+window.location.href+'" layout="button_count" show_faces="false" width="55" font="segoe ui"></fb:like></div></div>';
 						
 						videoMarkup += metadata;
-						
+						function hidemscaption(){
+								console.log(id);
+								$('#'+id).parent().find('.mscaption').hide();
+						}
+						function showmscaption(){
+								console.log(id);
+								$('#'+id).parent().find('.mscaption').show();
+						}
+
 						_V_(id,{ "controls": true, "autoplay": false, "preload": "auto" }, function(){
 					      // Player (this) is initialized and ready.
 					      //console.log('Finished Loading Video.js on: '+id.toString());
 					      _currentVideoId = id.toString();
+					      this.addEvent("play", hidemscaption);
+					      this.addEvent("ended", showmscaption);					      
 					    });
+					    						
 					}
 				});	
 				
@@ -479,7 +491,6 @@ function initAddress(){
 	_section = hashArr[1];
 	_article = hashArr[2];
 	
-	console.log([_page, oldpage]);
 	if(_page == 'home' && oldpage != 'home' && oldpage != undefined){
 		$('[data-hash="home"]').attr('id','bannerOut');
 		hidePanels('home');
@@ -487,7 +498,7 @@ function initAddress(){
 
 	setTimeout(function() { 
 		//Add a `true` parameter to the buildPage() call to override
-		console.log('build:: '+_page);
+
 		buildPage(true);
 		$('#breadcrumb').html('<a id="homelink">back</a>' + '<span class="currPage">' + $(_source).find('#'+_page).find('name').eq(0).text() + '</span>');
 	}, 700);
