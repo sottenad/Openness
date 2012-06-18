@@ -385,7 +385,7 @@ function showPanels(home){
 		});
 	}else{
 		/*Show All other panels - home button is smaller*/
-		$('#bannerOut').fadeOut(100);
+		$('.homeBanner #bannerOut').remove();
 		$('#banner #banner4').addClass('homeButton');
 		var figureAtts = {'top':'12px', 'left':'0px', 'height':'270px', 'width':'444px'},
 		banner1Atts = {'top':'12px', 'left':'449px', 'height':'103px', 'width':'234px'},
@@ -400,8 +400,10 @@ function showPanels(home){
 		$('#banner #banner4').css(banner4Atts).removeClass().addClass('red').delay(400).fadeIn(speed, function(){
 			_panelsCurrentlyAnimating = false;
 		});
+		
 	}
 	_showPanelAnimation = false;
+	
 }
 
 /*Opens the content Drawer - status stored in global var*/
@@ -508,7 +510,8 @@ function hidePanels(selected){
 			count++;
 		}else{
 			/*Be sure to account for padding on the aside elements*/
-			//if(debug) console.log('matched');
+			if(debug) console.log('matched');
+			$(this).attr('id','bannerOut');
 			$(this).delay(350).animate({
 				'top':'12px',
 				'left':'0px',
@@ -520,10 +523,11 @@ function hidePanels(selected){
 				/*Mark selected panel for deletion with 'bannerOut' id*/
 				var location = $(this).attr('data-destination');
 				var hash = $(this).attr('data-hash');
-				$(this).attr('id','bannerOut')
+				
 				window.location.hash = hash;
 			});
 		}	
 	});
 	$('#banner figure').delay(200).fadeOut(150);
+
 }
