@@ -109,10 +109,10 @@ function buildPage(override){
 				var description = $(sv).find('description').text();
 				if(_page != 'home'){
 					var markup = '<div id="breadcrumb"></div>';
-					markup += '<div data-videoid="'+videoid+'" id="vidHolder" class="videoholder"><span class="playicon"></span> <img src="video/'+smallposter+'" /> <small>'+title+'</small> </div>';
+					markup += '<div data-videoid="'+videoid+'" id="vidHolder" class="videoholder"></div>';
 				}else{
 					
-					var markup = '<div data-videoid="'+videoid+'" id="vidHolder" class="homevideoholder"><span class="playicon"></span><img src="video/'+poster+'" /> <small>'+title+'</small> </div>';
+					var markup = '<div data-videoid="'+videoid+'" id="vidHolder" class="homevideoholder"></div>';
 					showHome = true;
 				}
 				$('#banner figure').html(markup);
@@ -200,7 +200,7 @@ function buildSection(file){
 		
 		
 function createDrawerSlider(){
-	$('#drawer #slides ul').jcarousel({scroll:1});
+	$('#drawer #slides ul').jcarousel({scroll:1, itemFallbackDimension: 230});
 	var h = $('#drawer #slides ul').height()/2;
 	$('.jcarousel-prev').css('top',h+'px');
 	$('.jcarousel-next').css('top',h+'px');
@@ -210,6 +210,7 @@ function createDrawerSlider(){
 		
 /*Builds out a video gallery drawer, much different from the normal ajax call for a static drawer*/
 function buildVideoDrawer(xmlfile, selected, openDrawerbool){
+		
 		xml = $(_source).find('#'+_page);
 			var numOfVids = $(xml).find('video').length;
 			/*Check for multiple videos, there are differences in display*/
@@ -253,39 +254,31 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						vheight = $(this).find('videoheight').text();
 					}
 					if(id == selected){
-						//console.log([id, selected])
-						if(_currentVideoId != ''){
-
+						
+						if( $('#'+_currentVideoId).length > 0){
 							var myPlayer = _V_(_currentVideoId);
 							if( myPlayer != undefined){
 								myPlayer.destroy();
 							}
-							//console.log('destroyed: '+_currentVideoId );
-							
 						}
-					
-						videoMarkup = makeVideoMarkup(id, vheight, vwidth, mp4url, webmurl, ogvurl, vidposter, vidlabel);
-						//console.log('right after markup is added');
+						var dt = new Date();
+						var timestamp = dt.getTime();
+						var uniqId = id+timestamp;
+						videoMarkup = makeVideoMarkup( uniqId, vheight, vwidth, mp4url, webmurl, ogvurl, vidposter, vidlabel);
 						$('#vidHolder').empty();
 						$('#vidHolder').html(videoMarkup);
 						if(_page != "home" && vidaspect === "4:3") $(".videoholder #videoplayer").css("margin-left", 72); //reposition player for 4:3 aspect ratio
-						var metadata = '<h4>'+title+'</h4><p>'+desc+'</p>';
-						metadata += '<div class="socialbuttons"><div id="tweetBtn"><a target="_blank" href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="openatmicrosoft">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script></div><div id="facebookBtn"><script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script><fb:like href="'+window.location.href+'" layout="button_count" show_faces="false" width="55" font="segoe ui"></fb:like></div></div>';
-						
-						videoMarkup += metadata;
+
 						function hidemscaption(){
-								//console.log(id);
-								$('#'+id).parent().find('.mscaption').hide();
+								$('#'+uniqId).parent().find('.mscaption').hide();
 						}
 						function showmscaption(){
-								//console.log(id);
-								$('#'+id).parent().find('.mscaption').show();
+								$('#'+uniqId).parent().find('.mscaption').show();
 						}
 
-						_V_(id,{ "controls": true, "autoplay": false, "preload": "auto" }, function(){
+						_V_(uniqId,{ "controls": true, "autoplay": false, "preload": "auto" }, function(){
 					      // Player (this) is initialized and ready.
-					      //console.log('Finished Loading Video.js on: '+id.toString());
-					      _currentVideoId = id.toString();
+					      _currentVideoId = uniqId;
 					      this.addEvent("play", hidemscaption);
 					      this.addEvent("ended", showmscaption);					      
 					    });
@@ -305,13 +298,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						}
 					});
 				}
-			$('.playiconsmall').css('opacity',0.4);
-			$('.videothumb').live('mouseover', function(){
-				$(this).find('.playiconsmall').stop().fadeTo(100,1);
-			});
-			$('.videothumb').live('mouseout', function(){
-				$(this).find('.playiconsmall').stop().fadeTo(100,.4);
-			});
+
 			if(openDrawerbool){
 				openDrawer();
 				assignVideoSwitcher();
@@ -320,6 +307,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 			if($(xml).find('video').length > 4){
 				createDrawerSlider();
 			}	
+
 }
 
 /*Creates the listeners to make sure the panels launch the appropriate content in the drawer*/
@@ -498,7 +486,6 @@ function initAddress(){
 
 	setTimeout(function() { 
 		//Add a `true` parameter to the buildPage() call to override
-
 		buildPage(true);
 		$('#breadcrumb').html('<a id="homelink">back</a>' + '<span class="currPage">' + $(_source).find('#'+_page).find('name').eq(0).text() + '</span>');
 	}, 700);

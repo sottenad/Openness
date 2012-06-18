@@ -446,7 +446,7 @@ _V_.log = function(){
   if(window.console) {
     arguments.callee = arguments.callee.caller;
     var newarr = [].slice.call(arguments);
-    (typeof console.log === 'object' ? _V_.log.apply.call(console.log, console, newarr) : console.log.apply(console, newarr));
+    //(typeof console.log === 'object' ? _V_.log.apply.call(console.log, console, newarr) : console.log.apply(console, newarr));
   }
 };
 
@@ -3107,7 +3107,9 @@ _V_.html5 = _V_.PlaybackTech.extend({
   destroy: function(){
     this.player.tag = false;
     this.removeTriggers();
-    this.el.parentNode.removeChild(this.el);
+	
+		this.el.parentNode.removeChild(this.el);
+	
   },
 
   createElement: function(){

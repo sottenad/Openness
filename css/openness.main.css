@@ -54,8 +54,8 @@ nav ul ul li a{text-decoration:none; font-size:13px;}
 /*Start Banner*/
 .shadow_top {background:url(../images/shadow_top.png); height:24px; width:960px; margin:0 auto;}
 .shadow_bottom {background:url(../images/shadow_bottom.png); height:17px; width:960px; margin:12px auto;}
-#banner {color:#fff; height:270px; position:relative; font-size:30px; padding-top:12px;  line-height:30px; font-family:"Segoe Light", "Segoe UI Light", "Segoe UI Light Web ", Arial Narrow, "Lucida Grande", Verdana, Arial, Helvetica, Sans-serif;}
-#banner figure {position:absolute; background:url(../images/tile_gray_bg.png) repeat-y; top:12px; left:0; width:444px; overflow:hidden; cursor:pointer;}
+#banner { position:relative; z-index:999; color:#fff; height:270px; position:relative; font-size:30px; padding-top:12px;  line-height:30px; font-family:"Segoe Light", "Segoe UI Light", "Segoe UI Light Web ", Arial Narrow, "Lucida Grande", Verdana, Arial, Helvetica, Sans-serif;}
+#banner figure {position:absolute; background:url(../images/tile_gray_bg.png) repeat-y; top:12px; left:0; width:444px; overflow:hidden; cursor:pointer; z-index:999;}
 #banner figure small {font-size:15px; display:block;}
 /*#banner figure div {padding:20px 35px; height:157px;}*/
 #banner figcaption {cursor:pointer; font-size:26px; height:32px; padding:10px 0; overflow:hidden; vertical-align:middle; }
@@ -79,7 +79,8 @@ nav ul ul li a{text-decoration:none; font-size:13px;}
 #banner #banner4{top:140px; left:708px;}
 
 /*Banner Video Player*/
-.videoholder {background-color:#000;}
+
+.videoholder {background-color:#000; position:relative; z-index:999;}
 .videoholder #silverlightControlHost {margin:0 0 0 22px;}
 .videoholder small, .homevideoholder small, .mscaption{position:absolute; bottom:0; right:0; font-size:15px; padding:5px; background:url(../images/black_80.png); line-height:14px;}
 .videoholder img{position:absolute; /*top:45px;*/ left:0; width:444px; height:225px;}
@@ -90,7 +91,7 @@ nav ul ul li a{text-decoration:none; font-size:13px;}
 .videoholder .playicon{background:url(../images/play.png) no-repeat top left; height:100px; width:100px; position:absolute; top:60%; left:50%; margin:-50px 0 0 -50px; z-index:20;}
 
 .videothumb .thumbnail{position:relative; height:80px; width:80px; padding:0 5px 5px 0; float:left;}
-.playiconsmall{background:url(../images/play_small.png) no-repeat top left; height:40px; width:40px; position:absolute; top:50%; left:50%; margin:-20px 0 0 -20px; z-index:20; opacity}
+.playiconsmall{background:url(../images/play_small.png) no-repeat top left; height:40px; width:40px; position:absolute; top:50%; left:50%; margin:-20px 0 0 -20px; z-index:20;}
 
 .videothumb {cursor:pointer;}
 .videothumb .desc{clear:both; display:block;}
