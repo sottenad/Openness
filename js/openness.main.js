@@ -90,7 +90,7 @@ function assignPanelNavHandler(){
 function buildPage(override){
 	var showHome = false;
 
-			if(_showPanelAnimation || override){
+			if(_showPanelAnimation && override ){
 				xml = $(_source).find('#'+_page);
 				//if (debug) console.log('BUILDPAGE() -- '+_page);
 				/*Build Video Panel - Selext a random video from the list.*/
@@ -338,13 +338,14 @@ function assignAsideHandlers(){
 
 function goHome(override){
 	
-		if(_page != 'home' && !_panelsCurrentlyAnimating){
+		if(!_panelsCurrentlyAnimating || override){
 			$('[data-hash="home"]').attr('id','bannerOut');
 			var panelid = 'home';
-			var loc = $(this).attr('data-location');
+			//var loc = $(this).attr('data-location');
 			setPage(panelid);
 			_section = undefined;
 			_article = undefined;
+			_showPanelAnimation = true;
 			hidePanels(panelid);
 			updateHash();	
 		}
@@ -482,8 +483,9 @@ function initAddress(){
 	_article = hashArr[2];
 	
 	if(_page == 'home' && oldpage != 'home' && oldpage != undefined){
-		$('[data-hash="home"]').attr('id','bannerOut');
-		hidePanels('home');
+		//$('[data-hash="home"]').attr('id','bannerOut');
+		//hidePanels('home');
+		goHome(true);
 	}
 
 	setTimeout(function() { 
