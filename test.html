@@ -1,15 +1,21 @@
-<!DOCTYPE >
+<!doctype html>
 <html>
 <head>
-<link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
-<script src="http://vjs.zencdn.net/c/video.js"></script>
+	<meta charset="utf-8">
+    <link href="css/video-js.css" rel="stylesheet">
 </head>
 <body>
-<video id="my_video_1" class="video-js vjs-default-skin" controls
-  preload="auto" width="640" height="264"
-  data-setup="{}">
-  <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
-  <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
-</video>
+	<section id="banner" class="homeBanner">
+		<video width="444" height="270" poster="video/standards.jpg" preload="auto" class="video-js vjs-default-skin" controls id="hi" data-setup="{}">
+			<source type="video/mp4" src="http://cdn-smooth.ms-studiosmedia.com/msstudios/Openess/mp4/Standards_LowRes.mp4"></source>
+			<source type="video/ogg" src="http://cdn-smooth.ms-studiosmedia.com/msstudios/Openess/ogv/Standards_LowRes.ogv"></source>
+			<source type="video/webm" src="http://cdn-smooth.ms-studiosmedia.com/msstudios/Openess/webm/Standards_LowRes.webm"></source>
+		</video>
+	</section>
+	
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+	<script type="text/javascript" src="js/includes2.js"></script>
+	<script type="text/javascript" src="js/openness.main2.js"></script>
+	<script src="js/video.js"></script>
 </body>
 </html>

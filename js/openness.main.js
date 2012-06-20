@@ -33,6 +33,7 @@ $(function(){
 	getTwitterFeed();
 	populateBlogExcerpt(); /*In includes.js*/
 	
+	
 });
 
 function loadSource(){
@@ -275,14 +276,25 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						function showmscaption(){
 								$('#'+uniqId).parent().find('.mscaption').show();
 						}
+						var shortStopp = function(){
+							//console.log("shortStop");
+							var myPlayer = this;
+							myPlayer.pause();
+							window.setInterval(function () {
+								myPlayer.play();                      
+							}, 2000);
+						};
 
+
+			
 						_V_(uniqId,{ "controls": true, "autoplay": false, "preload": "auto" }, function(){
 					      // Player (this) is initialized and ready.
 					      _currentVideoId = uniqId;
+						  //this.addEvent("fullscreenchange", shortStopp);   
 					      this.addEvent("play", hidemscaption);
 					      this.addEvent("ended", showmscaption);					      
 					    });
-					    						
+											    						
 					}
 				});	
 				

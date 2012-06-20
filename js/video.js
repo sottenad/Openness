@@ -959,8 +959,12 @@ _V_.LoadingSpinner = _V_.Component.extend({
     player.addEvent("playing", _V_.proxy(this, this.hide));
 
     player.addEvent("seeking", _V_.proxy(this, this.show));
-    player.addEvent("error", _V_.proxy(this, this.show));
-
+	if (!$.browser.mozilla){
+		player.addEvent("error", _V_.proxy(this, this.show));
+	}
+	
+	player.addEvent("fullscreenchange", _V_.proxy(this, this.hide));
+	
     // Not showing spinner on stalled any more. Browsers may stall and then not trigger any events that would remove the spinner.
     // Checked in Chrome 16 and Safari 5.1.2. http://help.videojs.com/discussions/problems/883-why-is-the-download-progress-showing
     // player.addEvent("stalled", _V_.proxy(this, this.show));
