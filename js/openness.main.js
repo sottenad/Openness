@@ -93,6 +93,10 @@ function buildPage(override){
 
 			if(_showPanelAnimation && override ){
 				xml = $(_source).find('#'+_page);
+				if ($(xml).length <= 0){
+					goHome(true);
+					return false;
+				}
 				//if (debug) console.log('BUILDPAGE() -- '+_page);
 				/*Build Video Panel - Selext a random video from the list.*/
 				var numOfVids = $(xml).find('video').length;
@@ -213,6 +217,8 @@ function createDrawerSlider(){
 function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 		
 		xml = $(_source).find('#'+_page);
+		
+		
 			var numOfVids = $(xml).find('video').length;
 			/*Check for multiple videos, there are differences in display*/
 			/*if(numOfVids > 1){*/
@@ -265,7 +271,7 @@ function buildVideoDrawer(xmlfile, selected, openDrawerbool){
 						var dt = new Date();
 						var timestamp = dt.getTime();
 						var uniqId = id+timestamp;
-						videoMarkup = makeVideoMarkup( uniqId, vheight, vwidth, mp4url, webmurl, ogvurl, vidposter, vidlabel);
+						videoMarkup = makeVideoMarkup( uniqId, vheight, vwidth, mp4url, webmurl, ogvurl, vidposter, title);
 						$('#vidHolder').empty();
 						$('#vidHolder').html(videoMarkup);
 						if(_page != "home" && vidaspect === "4:3") $(".videoholder #videoplayer").css("margin-left", 72); //reposition player for 4:3 aspect ratio
@@ -467,6 +473,11 @@ function initAddress(){
 		hash = window.location.hash;
 	}else{
 		hash = 'home';
+	}
+	
+	/*If there's a trailing slash, kill it*/
+	if (hash.charAt( hash.length-1 ) == '/'){
+		hash = hash.substr(0, hash.length-1);
 	}
     
 	/* So, we are going to get the hash in the location bar, and parse

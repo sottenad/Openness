@@ -959,9 +959,9 @@ _V_.LoadingSpinner = _V_.Component.extend({
     player.addEvent("playing", _V_.proxy(this, this.hide));
 
     player.addEvent("seeking", _V_.proxy(this, this.show));
-	if (!$.browser.mozilla){
+	//if (!$.browser.mozilla){
 		player.addEvent("error", _V_.proxy(this, this.show));
-	}
+	//}
 	
 	player.addEvent("fullscreenchange", _V_.proxy(this, this.hide));
 	

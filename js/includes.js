@@ -339,9 +339,9 @@ function makeVideoMarkup(id, height, width, mp4url, webmurl, ogvurl, poster, vid
 	if(mp4url!=''){
 		output += '<source src="'+mp4url+'" type="video/mp4">';
 	}
-	/*if(ogvurl!=''){
+	if(ogvurl!=''){
 		output += '<source src="'+ogvurl+'" type="video/ogg">';
-	}*/
+	}
 	if(webmurl!=''){
 		output += '<source src="'+webmurl+'" type="video/webm">';
 	}
